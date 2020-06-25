@@ -1,3 +1,5 @@
+# UW-Madison Beamer Template
+
 Original Repository: https://github.com/travitch/uw-beamer-template
 
 This is a Beamer template set up to look pretty decent and have an University of Wisconsin-Madison theme.
