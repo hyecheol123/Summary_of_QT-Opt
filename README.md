@@ -1,21 +1,20 @@
-This is a Beamer template set up to look pretty decent and have a
-University of Wisconsin theme.  It is, of course, better than the
-existing Powerpoint templates.
+Original Repository: https://github.com/travitch/uw-beamer-template
 
-The easiest way to install this theme is to just dump the *.sty files
-into the same directory as your tex source.
+This is a Beamer template set up to look pretty decent and have an University of Wisconsin-Madison theme.
+It is, of course, better than the existing Powerpoint templates.
 
-A minimal Beamer presentation using this template looks something like
-the following:
+The easiest way to install this theme is to just dump the *.sty files into the same directory as your tex source.
 
+A minimal Beamer presentation using this template looks something like the following:
+
+```
 \documentclass{beamer}
-
 
 \usetheme{Wisconsin}
 \begin{document}
 %% Slides
 \end{document}
-
+```
 
 The theme currently has two options:
   * nav          - This option includes a navigation bar in the
@@ -26,7 +25,9 @@ The theme currently has two options:
   * compactlogo  - Compact title logo (takes less vertical space)
 
 Options are specified as:
+```
   \usetheme[white]{Wisconsin}
+```
 
 Other suggested packages:
 * tikz (pgf, for diagrams)
@@ -48,6 +49,7 @@ Extra
 Here is a very handy snippet of TeX to stick at
 the beginning of your presentation (after \begin{document}):
 
+```
 \newcommand*{\alphabet}{ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz}
 \newlength{\highlightheight}
 \newlength{\highlightdepth}
@@ -59,14 +61,14 @@ the beginning of your presentation (after \begin{document}):
 \addtolength{\highlightdepth}{\highlightmargin}
 \addtolength{\highlightheight}{\highlightdepth}
 \newcommand*{\Highlight}{\rlap{\textcolor{HighlightBackground}{\rule[-\highlightdepth]{\linewidth}{\highlightheight}}}}
+```
 
+HighlightBackground is defined by the Wisconsin theme. 
+This snippet allows you to include source code listings in the following way:
 
-HighlightBackground is defined by the Wisconsin theme.  This
-snippet allows you to include source code listings in the
-following way:
-
+```
   \lstinputlisting[language=C,moredelim={**[il][\Highlight]{@}}]{file.c}
+```
 
-Note the moredelim option; with this option and the preceeding
-declarations, prefixing a line in file.c will highlight the line.
+Note the moredelim option; with this option and the preceeding declarations, prefixing a line in file.c will highlight the line.
 
