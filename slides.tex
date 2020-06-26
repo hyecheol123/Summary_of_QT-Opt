@@ -144,7 +144,38 @@
   \section{\secondSec}
   \begin{frame}
     \frametitle{\secondSec}
-    
+    \centering
+    \Large{Use Reinforcement Learning with Deep Neural Network\\
+           to \textbf{perform pre-grasp manipulation}, \\
+           \textbf{response to dynamic disturbances}, \\
+           and \textbf{learn grasping in a generic framework} \\
+           that makes minimal assumptions about the task}
   \end{frame}
+
+  \begin{frame}
+    \frametitle{\secondSec : Constraint/Condition + Literature Review}
+    \begin{itemize}
+      \item \textbf{Closed-loop condition} (With feedback, \textit{\scriptsize{Morrison, et al.}})
+      \begin{itemize}
+        \item For the other papers work on closed-loop grasping, they deals with servoing problems.
+        \item This paper focuses on making generalized RL algorithm
+        \item In practice, it makes Kalashnikov et al.'s method (this method)
+              to autonomously acquire complicated grasping strategy
+      \end{itemize}
+      \pause
+      \item \textbf{Self-supervised} learning task
+      \begin{itemize}
+        \item Compare to prevoius work(by Zeng et al.), Kalashnikov et al. utilize more general action space
+        \item Actions consist of end-effector \textbf{Cartesian motion} and \textbf{gripper opening/closing}
+      \end{itemize}
+      \pause
+      \item Observation comes from \textbf{a single RGB camera} over the sholder
+      \begin{itemize}
+        \item Many current grasping system utilizes depth sensing
+        \item Using wrist-mounted cameras
+      \end{itemize}
+    \end{itemize}
+  \end{frame}
+  % End of Section 2
 
 \end{document}
