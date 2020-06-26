@@ -2,6 +2,7 @@
 
 % Imported Packages
 \usepackage[utf8]{inputenc}
+\usepackage{xcolor}
 
 % Theme
 \usetheme[white, compactlogo]{Wisconsin}
@@ -37,7 +38,7 @@
 %---------------------------------------------------------
 %This block defines the existing sections
 \newcommand{\firstSec}{Motivation}
-\newcommand{\secondSec}{Second Section}
+\newcommand{\secondSec}{Goal}
 % \newcommand{\nthSec}[n]{nth Section}
 %---------------------------------------------------------
 
@@ -87,12 +88,63 @@
         \pause
         \item \textbf{Noise} of sensors
       \end{itemize}
+      \pause
+      \begin{itemize}
+        \setlength{\itemindent}{.3in}
+        \item[$\Rightarrow$] Still hard to handle though we have sufficiently large training set
+        \begin{itemize}
+          \setlength{\itemindent}{0.3in}
+          \item[$\Rightarrow$] Collecting those training set is expensive (real experiments) 
+        \end{itemize}
+        \pause
+        \item[$\Rightarrow$] Lots of researchers focused on reusing pervious experiences
+      \end{itemize} 
     \end{frame}
 
     \begin{frame}
       \frametitle{\firstSec : Previous Works}
+      \begin{itemize}
+        \item Focused on learning narrow, individual tasks
+        \begin{itemize}
+          \item hitting a ball
+          \item opening door
+          \item throwing objects
+          \item \ldots
+        \end{itemize}
+        \pause
+      \end{itemize}
+      \begin{itemize}
+        \setlength{\itemindent}{.3in}
+        \item[$\Rightarrow$] Use \textbf{Grasping} to achieve \textit{generalization}
+      \end{itemize}
+      \pause
+      \begin{itemize}
+        \item Approached the grasping task as predicting a \textit{grasp pose}
+        \begin{enumerate}
+          \item Observe the scene (\textit{Normally, using a depth camera})
+          \item Choose best location to grasp
+          \item Reach the location (open-loop setting)
+        \end{enumerate}
+        \pause
+        \begin{itemize}
+          \item Different with how humans and animals behave
+          \item Grasp is a \textbf{dynamical process} that sence and control at each stage
+        \end{itemize}
+      \end{itemize}
+      \pause
+      \begin{itemize}
+        \setlength{\itemindent}{.3in}
+        \item[$\Rightarrow$] \textbf{Where this researches start!!}
+      \end{itemize}
     \end{frame}
   % End of Section 1
 
+
+  % Section 2: Goal
+  \section{\secondSec}
+  \begin{frame}
+    \frametitle{\secondSec}
+    
+  \end{frame}
 
 \end{document}
