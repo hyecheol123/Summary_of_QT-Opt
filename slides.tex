@@ -1,0 +1,56 @@
+\documentclass{beamer}
+
+% Imported Packages
+\usepackage[utf8]{inputenc}
+
+% Theme
+\usetheme[white, compactlogo]{Wisconsin}
+
+%This block of code defines the information to appear in the
+%Title page
+\title{QT-Opt: Scalable Deep Reinforcement Learning for Vision-Based Robotic Manipulation}
+\subtitle{arXiv:1806.10293, Kalashnikov et al, 2018.}
+\author{Hyecheol (Jerry) Jang}
+\institute{
+  \inst{1}%
+  Department of Computer Sciences\\
+  University of Wisconsin–Madison
+}
+\date{RL Paper Study, Jun. 29. 2020}
+%End of title page configuration block
+%------------------------------------------------------------
+
+
+%------------------------------------------------------------
+%The next block of commands puts the table of contents at the 
+%beginning of each section and highlights the current section:
+
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+%------------------------------------------------------------
+
+
+%---------------------------------------------------------
+%This block defines the existing sections
+\newcommand{\firstSec}{First Section}
+\newcommand{\secondSec}{Second Section}
+% \newcommand{\nthSec}[n]{nth Section}
+%---------------------------------------------------------
+
+
+\begin{document}
+  %The next statement creates the title page.
+  \frame{\titlepage}
+  
+  % Table of Contents
+  \begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents
+  \end{frame}
+
+\end{document}
