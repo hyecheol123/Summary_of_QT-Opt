@@ -1,0 +1,138 @@
+\documentclass{beamer}
+
+% Imported Packages
+\usepackage[utf8]{inputenc}
+
+% Theme
+\usetheme[white, compactlogo]{Wisconsin}
+
+%This block of code defines the information to appear in the
+%Title page
+\title{About the Beamer class in presentation making}
+\subtitle{A short story}
+\author{A.~B.~Arthur\inst{1} \and
+        J.~Doe\inst{2}
+       }
+\institute{
+  \inst{1}%
+  Faculty of Physics\\
+  Very Famous University
+  \and
+  \inst{2}%
+  Faculty of Chemistry\\
+  Very Famous University
+}
+\date{Very Large Conference, April 2013}
+%End of title page configuration block
+%------------------------------------------------------------
+
+
+%------------------------------------------------------------
+%The next block of commands puts the table of contents at the 
+%beginning of each section and highlights the current section:
+
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+%------------------------------------------------------------
+
+
+%---------------------------------------------------------
+%This block defines the existing sections
+\newcommand{\firstSec}{First Section}
+\newcommand{\secondSec}{Second Section}
+% \newcommand{\nthSec}[n]{nth Section}
+%---------------------------------------------------------
+
+
+\begin{document}
+  %The next statement creates the title page.
+  \frame{\titlepage}
+  
+  % Table of Contents
+  \begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents
+  \end{frame}
+
+
+  \section{\firstSec} % First Section Start
+
+    %---------------------------------------------------------
+    %Changing visivility of the text
+    \begin{frame}
+      \frametitle{\firstSec : Additional Title}
+      This is a text in second frame. For the sake of showing an example.
+      
+      \begin{itemize}
+        \item<1-> Text visible on slide 1 % Text will appear at slide 1 - 4
+        \item<2-> Text visible on slide 2 % Text will appear at slide 2 - 4
+        \item<3> Text visible on slides 3 % Text will appear only at slide 3
+        \item<4-> Text visible on slide 4 % Text will appear at slide 44
+      \end{itemize}
+    \end{frame}
+    %---------------------------------------------------------
+
+
+    %---------------------------------------------------------
+    %Example of the \pause command
+    \begin{frame}
+      \frametitle{\firstSec : Additional Title}
+      In this slide \pause
+      the text will be partially visible \pause
+      And finally everything will be there
+    \end{frame}
+    %---------------------------------------------------------
+
+
+  \section{\secondSec} % Second Section Start
+
+    %---------------------------------------------------------
+    %Highlighting text
+    \begin{frame}
+      \frametitle{\secondSec: Sample frame title}
+      In this slide, some important text will be
+      \alert{highlighted} because it's important.
+      Please, don't abuse it.
+
+      \begin{block}{Remark}
+        Sample text
+      \end{block}
+      
+      \begin{alertblock}{Important theorem}
+        Sample text in red box
+      \end{alertblock}
+      
+      \begin{examples}
+        Sample text in green box. The title of the block is ``Examples".
+      \end{examples}
+    \end{frame}
+    %---------------------------------------------------------
+
+
+    %---------------------------------------------------------
+    %Two columns
+    \begin{frame}
+      \frametitle{\secondSec: Two-column slide}
+      \begin{columns}
+        \column{0.5\textwidth} % First Section Start
+          This is a text in first column.
+          $$E=mc^2$$
+          \begin{itemize}
+            \item First item
+            \item Second item
+          \end{itemize}
+
+        \column{0.5\textwidth} % Second Section Start
+          This text will be in the second column
+          and on a second tought this is a nice looking
+          layout in some cases.
+      \end{columns}
+    \end{frame}
+    %---------------------------------------------------------
+
+\end{document}
