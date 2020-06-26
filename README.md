@@ -3,7 +3,7 @@
 Original Paper: https://arxiv.org/abs/1806.10293  
 For [RL Paper Study](https://github.com/utilForever/rl-paper-study) Presenation at Jun. 29. 2020  
 
-**See [slides.pdf]().** This is the presentation slide.
+**See [slides.pdf](https://github.com/hyecheol123/Summary_of_QT-Opt/blob/master/slides.pdf).** This is the presentation slide.
 
 ## Short summary
 
