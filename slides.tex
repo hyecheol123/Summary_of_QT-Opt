@@ -6,6 +6,7 @@
 
 % Theme
 \usetheme[white, compactlogo]{Wisconsin}
+\setbeamertemplate{caption}[numbered]
 
 %This block of code defines the information to appear in the
 %Title page
@@ -39,6 +40,9 @@
 %This block defines the existing sections
 \newcommand{\firstSec}{Motivation}
 \newcommand{\secondSec}{Goal}
+\newcommand{\thirdSec}{Overview of Model Architecture}
+
+\newcommand{\refSec}{References}
 % \newcommand{\nthSec}[n]{nth Section}
 %---------------------------------------------------------
 
@@ -96,9 +100,7 @@
           \setlength{\itemindent}{0.3in}
           \item[$\Rightarrow$] Collecting those training set is expensive (real experiments) 
         \end{itemize}
-        \pause
-        \item[$\Rightarrow$] Lots of researchers focused on reusing pervious experiences
-      \end{itemize} 
+      \end{itemize}
     \end{frame}
 
     \begin{frame}
@@ -178,14 +180,96 @@
   \end{frame}
   % End of Section 2
 
+  % Section 3: Overview of Model Architecture
+  \section{\thirdSec}
+    \begin{frame}
+      \frametitle{\thirdSec : MDP}
+      \begin{itemize}
+        \item General Formulation of Robotic Manipulation: \\
+              Based on \textbf{Markov Decision Process (MDP)}
+        \begin{itemize}
+          \item partially observed formulation (POMDP) is more general.
+          \item However, assuming current observation contains all necessary information for this task,
+                it is sufficient to use MDP.
+        \end{itemize}
+        \pause
+        \item MDP have a \textbf{general and powerful formalism} for decision making problems. \\
+              However, it is \textbf{hard to train}
+        \pause
+        \item For each step of MDP:
+        \begin{enumerate}
+          \item Observes Image from robot's camera (see Fig. \ref{fig:WorkspaceOverview})
+          \item choose a gripper command, Reward:
+          \begin{itemize}
+            \item failed grasp: reward of 0
+            \item successful grasp: reward of 1 \\
+                  Defined \textit{success} when the robot holds the object above a certain height
+          \end{itemize}
+        \end{enumerate}
+        \pause
+      \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+      \frametitle{\thirdSec: MDP}
+      \begin{figure}
+        \begin{columns}
+          \column{.4\linewidth}
+            \centering
+            \includegraphics[height=0.82\textheight]{Images/WorkspaceOverview.png}
+          \column{.6\linewidth}
+            \caption{Configuration of robot cell, with a sample observation image on top-right box}
+            \label{fig:WorkspaceOverview}
+        \end{columns}
+      \end{figure}
+    \end{frame}
+
+    \begin{frame}
+      \frametitle{\thirdSec: Algorithm Selection}
+      \begin{itemize}
+        \item Usually, Generalization needs diverse data
+        \begin{itemize}
+          \item However, recollecting experience on numerous objects after every policy update is impractical
+          \item Reason for \textbf{not using on-policy algorithm}
+        \end{itemize}
+        \pause
+        \item Using \textbf{scalable off-policy algorithm} based on Q-learning
+        \begin{itemize}
+          \item actor-critic algorithm are popular for handling continuous actions
+          \item However, Kalashnikov et al. found \textbf{scalable and more stable ways} to train only Q-function
+        \end{itemize}
+        \pause
+        \item Large Dataset and Network (See Fig. \ref{fig:ModelStructure})
+        \begin{itemize}
+          \item Kalashnikov et al. devised \textbf{distributed} training system (with 7 robots)
+          \item \textbf{Asynchronously update} target values, collect \textbf{on-policy data}, \\
+                reloads \textbf{off-policy data} from previous experiences, \\ 
+                and train network on both data stream.
+        \end{itemize}
+      \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+      \frametitle{\thirdSec : Algorithm Selection}
+      \begin{figure}
+        \centering
+        \includegraphics[]{Images/ModelStructure.jpg}
+        \caption{Distributed Reinforcement Learning infrastructure for QT-Opt.}
+        \label{fig:ModelStructure}
+      \end{figure}
+    \end{frame}
+  % End of Section 3
+
   % Endings: References
-  \begin{frame}
-    \frametitle{References}
-    \begin{itemize}
-      \item Kalashnikov, Dmitry, et al. QT-Opt: Scalable Deep Reinforcement Learning for Vision-Based Robotic Manipulation. 28 Nov. 2018, arxiv.org/abs/1806.10293.
-      \item Irpan, Alex, and Peter Pastor. Scalable Deep Reinforcement Learning for Robotic Manipulation. 28 June 2018, ai.googleblog.com/2018/06/scalable-deep-reinforcement-learning.html.
-      \item Morrison, Douglas, et al. “Closing the Loop for Robotic Grasping: A Real-Time, Generative Grasp Synthesis Approach.” Robotics: Science and Systems XIV, 2018, doi:10.15607/rss.2018.xiv.021.
-    \end{itemize}
-  \end{frame}
+  \section{\refSec}
+    \begin{frame}
+      \frametitle{References}
+      \begin{itemize}
+        \item Kalashnikov, Dmitry, et al. QT-Opt: Scalable Deep Reinforcement Learning for Vision-Based Robotic Manipulation. 28 Nov. 2018, arxiv.org/abs/1806.10293.
+        \item Irpan, Alex, and Peter Pastor. Scalable Deep Reinforcement Learning for Robotic Manipulation. 28 June 2018, ai.googleblog.com/2018/06/scalable-deep-reinforcement-learning.html.
+        \item Morrison, Douglas, et al. “Closing the Loop for Robotic Grasping: A Real-Time, Generative Grasp Synthesis Approach.” Robotics: Science and Systems XIV, 2018, doi:10.15607/rss.2018.xiv.021.
+      \end{itemize}
+    \end{frame}
+  % End of Reference Lists
 
 \end{document}

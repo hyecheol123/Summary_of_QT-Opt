@@ -3,6 +3,8 @@
 Original Paper: https://arxiv.org/abs/1806.10293  
 For [RL Paper Study](https://github.com/utilForever/rl-paper-study) Presenation at Jun. 29. 2020  
 
+Using [UWMadison Beamer Template](https://github.com/hyecheol123/UWMadison_Beamer_Template).  
+
 **See [slides.pdf](https://github.com/hyecheol123/Summary_of_QT-Opt/blob/master/slides.pdf).** This is the presentation slide.
 
 
