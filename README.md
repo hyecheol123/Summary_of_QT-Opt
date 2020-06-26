@@ -1,24 +1,13 @@
-# UW-Madison Beamer Template
+# UWMadison Beamer Template
 
-Original Repository: https://github.com/travitch/uw-beamer-template
+Original Repository: https://github.com/travitch/uw-beamer-template  
 
 This is a Beamer template set up to look pretty decent and have an University of Wisconsin-Madison theme.
 It is, of course, better than the existing Powerpoint templates.
 
 The easiest way to install this theme is to just dump the *.sty files into the same directory as your tex source.
 
-A minimal Beamer presentation using this template looks something like the following:
-
-```
-\documentclass{beamer}
-
-\usetheme{Wisconsin}
-\begin{document}
-%% Slides
-\end{document}
-```
-
-The theme currently has two options:
+The theme options are follow:
   * nav          - This option includes a navigation bar in the
                    lower-right corner of each slide
   * white        - This option changes the color scheme to black-on-white
@@ -26,27 +15,17 @@ The theme currently has two options:
   * nologo       - Suppress the crest in frame titles
   * compactlogo  - Compact title logo (takes less vertical space)
 
-Options are specified as:
-```
-  \usetheme[white]{Wisconsin}
-```
 
 Other suggested packages:
 * tikz (pgf, for diagrams)
 * listings (for source code listings)
 * fontspec (if using xetex)
 
+Additionally, The template that can be used as a starting point of making presentation has been included.  
+This template is originally made by [Overleaf](https://www.overleaf.com/learn/latex/beamer).
 
 
-Author: Tristan Ravitch (travitch@cs.wisc.edu)
-Initial Release: June 2009
-Public Domain
-
-
-Extra
------
-
-
+## Extra
 
 Here is a very handy snippet of TeX to stick at
 the beginning of your presentation (after \begin{document}):
