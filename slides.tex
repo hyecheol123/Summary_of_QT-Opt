@@ -36,7 +36,7 @@
 
 %---------------------------------------------------------
 %This block defines the existing sections
-\newcommand{\firstSec}{First Section}
+\newcommand{\firstSec}{Motivation}
 \newcommand{\secondSec}{Second Section}
 % \newcommand{\nthSec}[n]{nth Section}
 %---------------------------------------------------------
@@ -45,11 +45,54 @@
 \begin{document}
   %The next statement creates the title page.
   \frame{\titlepage}
-  
-  % Table of Contents
-  \begin{frame}
-    \frametitle{Table of Contents}
-    \tableofcontents
-  \end{frame}
+
+  % Section 1, Motivation
+  \section{\firstSec}
+    \begin{frame}
+      \frametitle{\firstSec : Why Robotics + Reinforcement Learning}
+      \begin{itemize}
+        \item Usually, Robots are good at \textbf{repetitive tasks} (e.g. Assembly Line)
+              \pause
+        \item Want to make Robots that \textbf{identifies surroundings} and \textbf{behave accordingly},
+              but it is difficult
+              \pause
+        \begin{itemize}
+          \item \textbf{Deep Learning}\\
+                Provide ability to handling real-world scenarios
+          \item \textbf{Reinforcement Learning}\\
+                Provide ability to make decision in long-term,
+                using previous experiences in complex and robust scenarios
+        \end{itemize}
+        \pause
+        \item Combining two techniques
+        \begin{itemize}
+          \item Able to learn policy continuously from their experience
+          \item No need for manual engineering, use data they collects
+        \end{itemize}
+      \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+      \frametitle{\firstSec : Difficulites of Using RL in Robotics}
+      \begin{itemize}
+        \item Varience in \textbf{visual and physical property of objects}
+        \pause
+        \begin{itemize}
+          \item Hardness of object (Soft or Hard)
+          \item Surface Characteristics (Slippery, Sticky, \ldots)
+          \item Color Variation
+          \item Shape Variation
+          \item \ldots
+        \end{itemize}
+        \pause
+        \item \textbf{Noise} of sensors
+      \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+      \frametitle{\firstSec : Previous Works}
+    \end{frame}
+  % End of Section 1
+
 
 \end{document}
