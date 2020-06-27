@@ -42,7 +42,7 @@
 \newcommand{\secondSec}{Goal}
 \newcommand{\thirdSec}{Overview of Model Architecture}
 
-\newcommand{\refSec}{References}
+\newcommand{\refSec}{Bibliography}
 % \newcommand{\nthSec}[n]{nth Section}
 %---------------------------------------------------------
 
@@ -258,16 +258,47 @@
         \label{fig:ModelStructure}
       \end{figure}
     \end{frame}
+
+    \begin{frame}
+      \frametitle{Optional: On-policy vs Off-policy}
+      \begin{itemize}
+        \item \textbf{On-policy Learning} learns the value of the policy being \textbf{carried out by the agent}, including the exploration steps. \\
+              e.g. SARSA(State-Action-Reward-State-Action) (See Fig. \ref{fig:SARSAAlgorithm})
+        \item \textbf{Off-policy Learning} learns the value of the optimal policy \textbf{independently of the agent's action} \\
+              e.g. Q-Learning (See Fig. \ref{fig:QLearningAlgorithm})
+      \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+      \frametitle{Optional: On-policy vs Off-policy}
+      \begin{columns}[b]
+        \column{.5\linewidth}
+          \centering
+          \begin{figure}
+            \includegraphics[height=.75\textheight]{Images/SARSA.png}
+            \caption{SARSA Algorithm}
+            \label{fig:SARSAAlgorithm}
+          \end{figure}
+         \column{.5\linewidth}
+           \centering
+           \begin{figure}
+             \includegraphics[width=.9\linewidth]{Images/Q-Learning.png}
+             \caption{Q-Learning Algorithm}
+             \label{fig:QLearningAlgorithm}
+           \end{figure}
+      \end{columns}
+    \end{frame}
   % End of Section 3
 
-  % Endings: References
+  % Endings: Bibliography
   \section{\refSec}
-    \begin{frame}
-      \frametitle{References}
+    \begin{frame}[allowframebreaks]
+      \frametitle{\refSec}
       \begin{itemize}
-        \item Kalashnikov, Dmitry, et al. QT-Opt: Scalable Deep Reinforcement Learning for Vision-Based Robotic Manipulation. 28 Nov. 2018, arxiv.org/abs/1806.10293.
+        \item \textbf{Kalashnikov, Dmitry, et al. QT-Opt: Scalable Deep Reinforcement Learning for Vision-Based Robotic Manipulation. 28 Nov. 2018, arxiv.org/abs/1806.10293.}
         \item Irpan, Alex, and Peter Pastor. Scalable Deep Reinforcement Learning for Robotic Manipulation. 28 June 2018, ai.googleblog.com/2018/06/scalable-deep-reinforcement-learning.html.
         \item Morrison, Douglas, et al. “Closing the Loop for Robotic Grasping: A Real-Time, Generative Grasp Synthesis Approach.” Robotics: Science and Systems XIV, 2018, doi:10.15607/rss.2018.xiv.021.
+        \item Poole, David Lynton, and Alan K. Mackworth. Artificial Intelligence: Foundations of Computational Agents. Cmabridge University Press, 2018.
       \end{itemize}
     \end{frame}
   % End of Reference Lists
