@@ -3,10 +3,12 @@
 % Imported Packages
 \usepackage[utf8]{inputenc}
 \usepackage{xcolor}
+\usepackage{amsmath, amssymb}
 
 % Theme
 \usetheme[white, compactlogo]{Wisconsin}
 \setbeamertemplate{caption}[numbered]
+\renewcommand{\vec}[1]{\mathbf{#1}}
 
 %This block of code defines the information to appear in the
 %Title page
@@ -41,9 +43,11 @@
 \newcommand{\firstSec}{Motivation}
 \newcommand{\secondSec}{Goal}
 \newcommand{\thirdSec}{Overview of Model Architecture}
-
+\newcommand{\forthSec}{QT-Opt}
+\newcommand{\fifthSec}{Environment Settings}
+\newcommand{\sixthSec}{Experiments}
+\newcommand{\seventhSec}{Discussions}
 \newcommand{\refSec}{Bibliography}
-% \newcommand{\nthSec}[n]{nth Section}
 %---------------------------------------------------------
 
 
@@ -180,6 +184,7 @@
   \end{frame}
   % End of Section 2
 
+
   % Section 3: Overview of Model Architecture
   \section{\thirdSec}
     \begin{frame}
@@ -206,7 +211,6 @@
                   Defined \textit{success} when the robot holds the object above a certain height
           \end{itemize}
         \end{enumerate}
-        \pause
       \end{itemize}
     \end{frame}
 
@@ -260,17 +264,18 @@
     \end{frame}
 
     \begin{frame}
-      \frametitle{Optional: On-policy vs Off-policy}
+      \frametitle{Optional: On-policy vs Off-policy \scriptsize{\textit{Poole et al.}}}
       \begin{itemize}
         \item \textbf{On-policy Learning} learns the value of the policy being \textbf{carried out by the agent}, including the exploration steps. \\
               e.g. SARSA(State-Action-Reward-State-Action) (See Fig. \ref{fig:SARSAAlgorithm})
+        \pause
         \item \textbf{Off-policy Learning} learns the value of the optimal policy \textbf{independently of the agent's action} \\
               e.g. Q-Learning (See Fig. \ref{fig:QLearningAlgorithm})
       \end{itemize}
     \end{frame}
 
     \begin{frame}
-      \frametitle{Optional: On-policy vs Off-policy}
+      \frametitle{Optional: On-policy vs Off-policy \scriptsize{\textit{Poole et al.}}}
       \begin{columns}[b]
         \column{.5\linewidth}
           \centering
@@ -289,6 +294,176 @@
       \end{columns}
     \end{frame}
   % End of Section 3
+
+
+  % Section 4: QT-Opt
+  \section{\forthSec}
+    \begin{frame}
+      \frametitle{\forthSec}
+      \begin{itemize}
+        \item \Large{Continuous action version of Q-Learning}
+        \begin{itemize}
+          \item For \textbf{scalable} learning and optimized for \textbf{stability}
+          \item To handle \textbf{large amount of off-policy image data} for complex tasks
+        \end{itemize}
+      \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+      \frametitle{\forthSec: Revisit Q-Learning}
+      \begin{itemize}
+        \item \textbf{state}: $\vec{s} \in \mathcal{S}$ (\textit{Image Observations})
+        \item \textbf{action}: $\vec{a} \in \mathcal{A}$ (\textit{Robot Arm Motions and Gripper commands})
+        \item at \textbf{each time step} $t$
+        \begin{enumerate}
+          \item Choose an action
+          \item transition to new state
+          \item receive reward $\gamma(\vec{s}_t, \vec{a}_t)$
+        \end{enumerate}
+      \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+      \frametitle{\forthSec: Revisit Q-Learning}
+      \begin{itemize}
+        \item Need to solve for Optimal Q-function: Minimize Bellman Error \\
+              \begin{equation*}
+                \mathcal{E}(\theta) = \mathbb{E}_{(\vec{s}, \vec{a}, \vec{s'}) \sim p(\vec{s}, \vec{a}, \vec{s'})}[\mathcal{D}(\mathcal{Q}_{\theta}(\vec{s}, \vec{a}),\mathcal{Q}_{\mathcal{T}}(\vec{s}, \vec{a}, \vec{s'}))]
+              \end{equation*}
+              Where $\mathcal{Q}_{\mathcal{T}}(\vec{s}, \vec{a}, \vec{s'}) = r(\vec{s}, \vec{a}) + \gamma V(\vec{s'})$ (\textit{target value})
+        \item $\mathcal{D}$: divergence metric (squared difference for Q-Learning)
+        \linebreak
+        \item Expectation is taken under the distribution over all previously observed transition
+      \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+      \frametitle{\forthSec: Q-Learning Implementation}
+      \begin{itemize}
+        \item Use \textbf{two target network} to improve stability
+        \begin{itemize}
+          \item Maintaining two lagged version of the parameter vector $\theta, \bar{\theta_1}, \bar{\theta_2}$
+          \item $\bar{\theta_1}$: exponential moving averaged version of $\theta$, \\ 
+                averaging constant: 0.9999
+          \item $\bar{\theta_2}$: lagged version of $\bar{\theta_1}$, \\
+                lagged by 6000 gradient steps
+        \end{itemize}
+        \pause
+        \item Compute target value by $V(\vec{s'}) = \min_{i = 1, 2}\mathcal{Q}_{\bar{\theta_i}}(\vec{s'}, arg\max_{\vec{a'}}\mathcal{Q}_{\bar{\theta_1}}(\vec{s'}, \vec{a'}))$
+        \pause
+        \item the policy is recovered by $\pi(\vec{s}) = arg\max_{\vec{a}}\mathcal{Q}_{\bar{\theta_1}}(\vec{s}, \vec{a})$
+        \pause
+        \item After collects samples from environment interaction, then perform off-policy training on all samples collected
+        \begin{itemize}
+          \item Problem: Large-scale learning (Technically Difficult)
+          \item Solution: Use \textbf{Parallel Asynchronous} version \\
+                (which leads ability to scale up the process)
+        \end{itemize}
+      \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+      \frametitle{\forthSec: Problem of Q-Learning}
+      \begin{itemize}
+        \item Difficult to deal with continuous actions, \footnotesize{e.g. continuous gripper motion}
+        \pause
+        \item \normalsize{\textit{Previous Solutions:}}
+        \begin{itemize}
+          \item using a second network that "amortize" the maximization
+          \item constraining the Q-function to be convex in $\vec{a}$, so that makes the function to easily find maximum ananlytically
+        \end{itemize}
+        \pause
+        \item problem of previous solutions
+        \begin{itemize}
+          \item Unstable: problematic for large-scale RL tasks where running hyperparameter sweeps is very expensive
+          \item Action-convex value functions are poor fit for complex manipulation tasks \\
+        \end{itemize}
+      \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+      \frametitle{\forthSec : Stable Continuous-Action Q-Learning}
+      \begin{itemize}
+        \item To \textbf{maintain the generality of non-convex Q-function} \\ 
+              while \textbf{not using a second maximizer network}
+        \item the Bellman equation is evaluated with stocastic optimization
+        \begin{itemize}
+          \item handles non-convex and multimodal optimization landscapes
+          \linebreak
+        \end{itemize}
+        \pause
+        \item QT-Opt
+        \begin{itemize}
+          \item $\pi_{\bar{\theta_1}}(\vec{s})$ is evaluaed by running stochastic optimization over $\vec{a}$, \\
+                using $\mathcal{Q}_{\bar{\theta_1}}(\vec{s}, \vec{a})$ as the objective value
+          \pause
+          \item Use Cross-Entropy Method
+          \begin{enumerate}
+            \item samples a batch of $N$ at each iteration
+            \item fits a Gaussian distribution to the best $M < N$ samples
+            \item Samples next batch of $N$ from the Gaussian
+            \pause
+          \end{enumerate}          
+          \begin{itemize}
+            \item easy to parallelize
+            \item moderately robust to local optima
+          \end{itemize}
+        \end{itemize}
+      \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+      \frametitle{\forthSec : Distributed Asynchronous QT-Opt}
+      \begin{itemize}
+        \item Requires large amount of diverse data to generalize over new scenes and objects for the image-based policy
+        \linebreak
+        \pause
+        \item Needs of Distributed System (See Fig. \ref{fig:ModelStructure})
+        \pause
+        \begin{enumerate}
+          \item Replay buffer stores both \textbf{off-line data} (from disk) and \\ 
+                on-going experiments' data (\textbf{on-line data})
+          \pause
+          \item Data in buffer labeled with target Q-value using a set of 1000 \\
+                "bellman updater" jobs
+          \pause
+          \item Store the labeled sample in the training buffer
+          \begin{itemize}
+            \item Some samples in the training buffer are \textbf{labeled with lagged version} \\ 
+                  of the Q-network
+          \end{itemize}
+          \pause
+          \item Training workers pull the labeled sample from the training buffer \textbf{randomly} to update the Q-function
+          \begin{itemize}
+            \item each training workers compute gradient that sent to \\ 
+                  parameter server asynchronously
+          \end{itemize}
+        \end{enumerate}
+        \pause
+        \begin{itemize}
+          \item Empirically, it requires up to \textbf{15M gradient steps} \\
+                to train effective Q-function due to \textbf{complexity of the task} \\ 
+                and \textbf{the size of dataset and model}
+        \end{itemize}
+      \end{itemize}
+    \end{frame}
+  % End of Section 4
+
+
+  % Section 5: Environment Settings
+  \section{\fifthSec}
+  % End of Section 5
+
+
+  % Section 6: Experiments
+  \section{\sixthSec}
+  % End of Section 6
+
+
+  % Section 7: Discussions
+  \section{\seventhSec}
+  % End of Section 7
+
 
   % Endings: Bibliography
   \section{\refSec}
