@@ -452,6 +452,114 @@
 
   % Section 5: Environment Settings
   \section{\fifthSec}
+    \begin{frame}
+      \frametitle{\fifthSec : Overview}
+      \begin{itemize}
+        \item Policy
+        \begin{itemize}
+          \item locate object
+          \item position for grasping (pre-grasping manipulation, if needed)
+          \item pick up (regrasping, if needed)
+          \item Pull up the object
+          \item signal thermination
+        \end{itemize}
+        \pause
+        \item Reward
+        \begin{itemize}
+          \item only indicates whether or not an object was successfully picked up
+        \end{itemize}
+        \pause
+        \item End-to-End approach of grasping!!
+        \begin{itemize}
+          \item no prior knowledge about object, physics, or motion planning
+          \item model itself autonomously extract the knowledges from data
+        \end{itemize}
+      \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+      \frametitle{\fifthSec : MDP for grapsing}
+      \begin{itemize}
+        \item state observation $\vec{s} \in \mathcal{S}$ includes:
+        \begin{itemize}
+          \item robot's current camera observation (RGB image, res: 472 $\times$ 472) \\
+                from over-the-sholder single-lens camera
+          \item current status of gripper (binary)
+          \item vertical position of the gripper relative to the floor
+        \end{itemize}
+        \pause
+        \item action $\vec{a} = (\vec{t}, \vec{r}, g_{open}, g_{close}, e) \in \mathcal{A}$ includes:
+        \begin{itemize}
+          \item vector in Cartesian space $\vec{t} \in \mathbb{R}^3$ \\ 
+                (desired change in the gripper position)
+          \item change in azimuthal angle via sine-cosine encoding, $\vec{r} \in \mathbb{R}^2$
+          \item binary gripper open and close command, $g_{open}, g_{close}$
+          \item termination command, $e$
+        \end{itemize}
+      \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+      \frametitle{\fifthSec : Reward Function}
+      \begin{itemize}
+        \item 1: if gripper carries the object up above certain height \\ 
+              at the end of the episode
+        \item 0: otherwise
+        \pause
+        \item penalty (-0.05): for all time steps prior to termination
+        \begin{itemize}
+          \item emits termination action
+          \item exceed the maximum number of time steps(20)
+          \linebreak
+        \end{itemize}
+        \pause
+        \item delayed and sparse reward function is challenging, \\
+              but more practical for automated self-supervision
+      \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+      \frametitle{\fifthSec : Q-function}
+      \begin{figure}
+        \centering
+        \includegraphics[width = \linewidth]{Images/QFunctionNetwork.png}
+        \caption{Neural Network Architecture for Q-Fuction. \linebreak
+                 It has total of 1.2M parameters. The image is processed with convolution filters,
+                 and the other inputs are processed by fully connected layer, then concatenated with the image}
+        \label{fig:QFunctionNetwork}
+      \end{figure}
+    \end{frame}
+
+    \begin{frame}
+      \frametitle{\fifthSec : Data Collection}
+      \begin{itemize}
+        \item Need to collect data on sufficiently large and diverse set of objects
+        \item Use multiple robots and multiple experiments to collect such data
+        \begin{itemize}
+          \item Took four months, 800 Robot hrs
+          \item Collected during multiple separated experiments, \\
+                and each experiment reused the data from the previous one
+          \linebreak
+        \end{itemize}
+        \pause
+        \item Initialize policy
+        \begin{itemize}
+          \item Used weak scripted exploration policy to bootstrap data collection
+          \item Still random, but biased toward reasonable grapsing
+          \item Success Rate: Around 15-30\%
+          \item Switching to QT-Opt once it reach 50\% of success rate
+          \linebreak
+        \end{itemize}
+        \pause
+        \item Other Conditions
+        \begin{itemize}
+          \item Using seven LBR IIWA robots
+          \item with 4-10 objects per robots
+          \item objects were replaced every 4 hours during business hours
+          \item Use different objects during test
+        \end{itemize}
+      \end{itemize}
+    \end{frame}
   % End of Section 5
 
 
