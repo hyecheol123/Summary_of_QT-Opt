@@ -565,6 +565,128 @@
 
   % Section 6: Experiments
   \section{\sixthSec}
+    \begin{frame}
+      \frametitle{\sixthSec}
+      \begin{enumerate}
+        \item Performance on unseen object (quantitative)
+        \item Performance comparision with other self-supervised grasping system (quantitative)
+        \item Manipulation strategies which carried out meaningful pre-grasp manipulation (quality)
+      \end{enumerate}
+    \end{frame}
+
+    \begin{frame}
+      \frametitle{\sixthSec : Quantitative Analysis}
+      \begin{itemize}
+        \item Used two evaluation protocol
+        \begin{itemize}
+          \item Each robots make 102 grasp attemps on test objects.
+          \begin{itemize}
+            \item grasp attemps last for up to 20 times steps
+            \item any grasped objects returned back to the bin
+            \item Experimently, the robot made grasp attemps on a various objects, \\
+                  not picking one objects
+            \item Might have confounding effects
+          \end{itemize}
+          \pause
+          \item bin emptying
+          \begin{itemize}
+            \item single robot unload a bin with 28 test objects, using 30 grasp attemps
+            \item Repeated for five times
+            \item Success rate is reported over the first 10, 20, and 30 grasp attemps
+          \end{itemize}
+        \end{itemize}
+      \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+      \frametitle{\sixthSec: Quantitative Analysis (Result)}
+      \begin{figure}
+        \centering
+        \includegraphics[width = \linewidth]{Images/QuantitativeAnalysisResult.png}
+        \caption{Result of Quantitative Analysis Result. \linebreak
+                 Left half indicates the result of re-deposit grasping tasks, the right half indicates the results of bin emptying experiments}
+        \label{fig:QuantitativeAnalysisResult}
+      \end{figure}
+    \end{frame}
+
+    \begin{frame}
+      \frametitle{\sixthSec: Quantitative Analysis (Result)}
+      (See Fig. \ref{fig:QuantitativeAnalysisResult})
+      \begin{itemize}
+        \item Usage of on-policy training
+        \begin{itemize}
+          \item on-policy joint finetuning provides better Performance
+          \item Kalashnikov et al. analyzed that on-policy helps the model to remove "hard negatives"
+        \end{itemize}
+        \pause
+        \item Bin emptying
+        \begin{itemize}
+          \item successfully empty all objects within 30 grasps for 2/5 trials (Kalashnikov et al.)
+          \item Previous method (Levine et al.) successfully empty for 1/5 trials
+          \item lower success rate for 30 grasp due to the algorithm tend to grasp easy one first
+        \end{itemize}
+      \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+      \frametitle{\sixthSec: Quantitative Analysis (Result)}
+      (See Fig. \ref{fig:QuantitativeAnalysisResult})
+      \begin{itemize}
+        \item Compare with Levine et al.
+        \begin{itemize}
+          \item greedly optimized for grasp success at the next grasp
+          \item does not control the opening and closing of gripper
+          \item does not explain about pregrasp manipulation
+          \pause
+          \item action representation is different, making the format of dataset different
+          \pause
+          \item tested on both Levine et al.'s data format and this article's format
+          \item either way, it is worse than Kalashnikov et al's work
+        \end{itemize}
+      \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+      \frametitle{\sixthSec : Qualitative Analysis}
+      \centering
+      Video: \url{https://sites.google.com/view/qtopt}
+    \end{frame}
+
+    \begin{frame}
+      \frametitle{\sixthSec : Qualitative Analysis (Explaination)}
+      \begin{itemize}
+        \item Singulation and pregrasp manipulation
+        \begin{itemize}
+          \item Change position of object to make them easier to grasp
+        \end{itemize}
+        \pause
+        \item Regrasping
+        \begin{itemize}
+          \item open and close the gripper at any time
+          \item detect failed or unstable grasp earlier \\
+                so that let the robots to grisp more securely
+        \end{itemize}
+        \pause
+        \item Handling disturbance and Dynamic objects
+        \begin{itemize}
+          \item grasp object that moving dynamically (e.g. balls)
+          \item though the sequence intentionally disturbed, \\ 
+                it still able to grasp the object
+        \end{itemize}
+        \pause
+        \item Grapsing in clutter
+        \begin{itemize}
+          \item Note that there exists upto 10 objects during training time
+          \item The policy still able to grasp object in dense clutter
+          \pause
+          \item Some failure
+          \begin{itemize}
+            \item prone to regrasp repeatedly
+            \item often produce successful graps, but time consuming
+          \end{itemize}
+        \end{itemize}
+      \end{itemize}
+    \end{frame}
   % End of Section 6
 
 
